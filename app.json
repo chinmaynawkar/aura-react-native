@@ -1,11 +1,11 @@
 {
   "expo": {
-    "name": "native-practice",
-    "slug": "native-practice",
+    "name": "Aura",
+    "slug": "Aura",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
-    "scheme": "myapp",
+    "scheme": "Aura",
     "userInterfaceStyle": "automatic",
     "splash": {
       "image": "./assets/images/splash.png",
