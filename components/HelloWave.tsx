@@ -1,3 +1,4 @@
+/* eslint-disable react/react-in-jsx-scope */
 import { StyleSheet } from 'react-native';
 import Animated, {
   useSharedValue,

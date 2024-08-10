@@ -1,7 +1,7 @@
 import { StatusBar, Text, View } from 'react-native';
-import type { StatusBarProps } from 'react-native';
 import { Link } from 'expo-router'; // this is the link component to navigate to other screens
 import { SafeAreaView } from 'react-native-safe-area-context';
+import React from 'react';
 
 const STYLES = ['default', 'dark-content', 'light-content'] as const;
 
