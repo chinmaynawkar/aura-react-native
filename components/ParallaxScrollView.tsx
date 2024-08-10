@@ -1,3 +1,4 @@
+/* eslint-disable react/react-in-jsx-scope */
 import type { PropsWithChildren, ReactElement } from 'react';
 import { StyleSheet, useColorScheme } from 'react-native';
 import Animated, {
