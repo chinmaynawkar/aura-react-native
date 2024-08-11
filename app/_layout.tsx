@@ -8,6 +8,8 @@ SplashScreen.preventAutoHideAsync(); // prevents the splash screen from hiding a
 
 const RootLayout= () => {
   const [fontsLoaded, error] = useFonts({
+    //TODO: Fix this font are not loading.
+    
     "Poppins-Black": require("../assets/fonts/Poppins-Black.ttf"),
     "Poppins-Bold": require("../assets/fonts/Poppins-Bold.ttf"),
     "Poppins-ExtraBold": require("../assets/fonts/Poppins-ExtraBold.ttf"),
