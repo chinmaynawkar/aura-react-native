@@ -46,7 +46,7 @@ export default function App() {
 
           <ButtonComponent
             title="Don't Miss Out, Join Now"
-            handlePress={() => router.push('/signup')}
+            handlePress={() => router.push('/signin')}
             containerStyle="w-full mt-7"
             />
         </View>

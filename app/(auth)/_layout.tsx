@@ -1,11 +1,25 @@
-import { View, Text } from 'react-native'
 import React from 'react'
+import { Stack } from 'expo-router'
+import { StatusBar } from 'expo-status-bar' // status bar of two types from expo and react-native
 
 const AuthLayout = () => {
   return (
-    <View>
-      <Text>Auth</Text>
-    </View>
+    <>
+    <Stack>
+      <Stack.Screen 
+      name='signin'
+      options={{ 
+        headerShown: false,
+      }} />
+      <Stack.Screen
+      name='signup'
+      options={{ 
+        headerShown: false,
+        }} />
+      </Stack>
+
+      <StatusBar backgroundColor='#161622' style='light' />
+    </>
   )
 }
 
