@@ -25,21 +25,19 @@ module.exports = {
     '@typescript-eslint',
     'prettier',
   ],
-  rules: {
-    'no-console': 'warn',
-    'no-unused-vars': 'warn',
-    'no-debugger': 'error',
-    '@typescript-eslint/no-unused-vars': ['warn', { argsIgnorePattern: '^_' }],
-    '@typescript-eslint/explicit-function-return-type': 'off',
-    '@typescript-eslint/no-explicit-any': 'warn',
-    'react/prop-types': 'off',
-    // 'react/react-in-jsx-scope': 'off',
-    'react/jsx-filename-extension': [1, { extensions: ['.tsx', '.jsx'] }],
-    'react-native/no-inline-styles': 'warn',
-    'react-native/no-unused-styles': 'warn',
-    'react-native/split-platform-components': 'warn',
-    'prettier/prettier': 'error',
-  },
+  "react-native/no-unused-styles": 2,
+    "react-native/split-platform-components": 2,
+    "react-native/no-inline-styles": 2,
+    "react-native/no-color-literals": 2,
+    "react-native/no-raw-text": 2,
+    "react-native/sort-styles": [
+      "error",
+      "asc",
+       {
+         "ignoreClassNames": false,
+         "ignoreStyleProperties": false
+       }
+     ],
   settings: {
     react: {
       version: 'detect',

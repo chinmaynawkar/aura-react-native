@@ -5,15 +5,15 @@ import React from 'react';
 
 const STYLES = ['default', 'dark-content', 'light-content'] as const;
 
-export default function RootLayout() {
+export default function App() {
   return(
     <View className="flex-1 items-center justify-center bg-white">
       <SafeAreaView>
-      <Text className="text-3xl font-bold">Welcome to Aura!</Text>
+      <Text className="text-3xl font-pblack">Welcome to Aura!</Text>
         <StatusBar barStyle={STYLES[0]} />
       </SafeAreaView>
-      <Link href="/profile" className="text-blue-500 hover:text-blue-700">
-        <Text> Go toProfile</Text>
+      <Link href="/home" className="text-blue-500 hover:text-blue-700">
+        <Text> Go to Home</Text>
       </Link>
     </View>
   );
