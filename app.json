@@ -13,7 +13,8 @@
       "backgroundColor": "#ffffff"
     },
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "package": "com.chinmayprivate.aura"
     },
     "android": {
       "adaptiveIcon": {
@@ -31,6 +32,7 @@
     ],
     "experiments": {
       "typedRoutes": true
-    }
+    },
+    "entryPoint": "./app/index.tsx"
   }
 }

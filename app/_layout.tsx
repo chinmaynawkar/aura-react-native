@@ -3,6 +3,7 @@ import { SplashScreen, Stack } from 'expo-router'
 import { useFonts } from 'expo-font';
 import { useEffect } from 'react';
 import React from 'react';
+import GlobalProvider from '@/context/GlobalProvider';
 
 SplashScreen.preventAutoHideAsync(); // prevents the splash screen from hiding automatically
 
@@ -28,9 +29,10 @@ const RootLayout= () => {
   }, [fontsLoaded, error]);
 
   if(!fontsLoaded && !error) 
-    console.error("Fonts not loaded");
+    return null
 
     return (
+      <GlobalProvider>
     <Stack>
       {/* to hide the header from the top of the screen */}
       <Stack.Screen name='index' options={{ headerShown: false }} />
@@ -38,6 +40,7 @@ const RootLayout= () => {
       <Stack.Screen name='(tabs)' options={{ headerShown: false }} />
       {/* <Stack.Screen name='/search/[query]' options={{ headerShown: false }} /> */}
     </Stack>
+    </GlobalProvider>
     )
   }
 
