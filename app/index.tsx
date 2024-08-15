@@ -6,10 +6,14 @@ import { ScrollView } from 'react-native';
 import images from '@/constants/images';
 import { View, Image } from 'react-native';
 import ButtonComponent from '@/components/CustomButton';
+import { useGlobalContext } from '@/context/GlobalProvider';
 
 const STYLES = ['default', 'dark-content', 'light-content'] as const;
 
 export default function App() {
+  const { loading, isLogged } = useGlobalContext();
+
+  if (!loading && isLogged) return <Redirect href='/home' />;
   return (
     <SafeAreaView className='bg-primary h-full'>
       <ScrollView contentContainerStyle={{ flexGrow: 1, height: '100%' }}>

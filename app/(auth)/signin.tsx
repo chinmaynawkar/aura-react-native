@@ -1,12 +1,14 @@
 // Signin page
-import { View, Text, ScrollView } from 'react-native'
+import { View, Text, ScrollView, Alert } from 'react-native'
 import React from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import images from '@/constants/images'
 import { Image } from 'react-native'
 import FormField from '@/components/FormField'
 import ButtonComponent from '@/components/CustomButton'
-import { Link } from 'expo-router'
+import { Link, router } from 'expo-router'
+import { signIn, getCurrentUser } from '@/lib'
+import { useGlobalContext } from '@/context/GlobalProvider'
 
 interface FormElements {
   email: string;
@@ -14,15 +16,35 @@ interface FormElements {
 }
 
 const signin = () => {
+  const { setUser, setIsLogged } = useGlobalContext()
   const [formElements, setFormElements] = React.useState< FormElements >({
     email: '',
     password: '',
   })
  const [isSubmitted, setIsSubmitted] = React.useState(false)
 
-  const submitForm = () => {
-    console.log(formElements)
+ const submitForm = async() => {
+  if(formElements.email === '' || formElements.password === ''){
+    Alert.alert('Please fill all the fields')
   }
+  setIsSubmitted(true)
+ try{
+  await signIn(formElements.email, formElements.password)
+  const result = await getCurrentUser()
+  setUser(result)
+  setIsLogged(true)
+
+  Alert.alert('Sucess', "You're now logged in")
+
+  //TODO: set it to global state
+  router.replace('/home')
+  } catch(error: any) {
+    console.log(error)
+    Alert.alert('Error creating account', error.message)
+  } finally {
+    setIsSubmitted(false)
+ }
+}
 
   return (
     <SafeAreaView className='bg-primary h-full'>
