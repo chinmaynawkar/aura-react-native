@@ -1,12 +1,14 @@
 // Signup page
-import { View, Text, ScrollView } from 'react-native'
+import { View, Text, ScrollView, Alert } from 'react-native'
 import React from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import images from '@/constants/images'
 import { Image } from 'react-native'
 import FormField from '@/components/FormField'
 import ButtonComponent from '@/components/CustomButton'
-import { Link } from 'expo-router'
+import { Link, router } from 'expo-router'
+import { createUser } from '@/lib'
+import { useGlobalContext } from '@/context/GlobalProvider'
 
 interface FormElements {
   username: string;
@@ -15,6 +17,7 @@ interface FormElements {
 }
 
 const signup = () => {
+  const { setUser, setIsLogged } = useGlobalContext();
   const [formElements, setFormElements] = React.useState< FormElements >({
     username: '',
     email: '',
@@ -23,8 +26,28 @@ const signup = () => {
  const [isSubmitted, setIsSubmitted] = React.useState(false)
 
 
-  const submitForm = () => {
-    console.log(formElements)
+  const submitForm = async () => {
+    if(formElements.username === '' || formElements.email === '' || formElements.password === '') {
+      Alert.alert('Error', 'Please fill all the fields');
+    }
+    setIsSubmitted(true);
+    try {
+      const result = await createUser(
+        formElements.email,
+        formElements.username,
+        formElements.password
+      )
+      setUser(result);
+      setIsLogged(true);
+
+      Alert.alert('Welcome! Create your first video now');
+      router.replace('/home');
+    } catch (error) {
+      console.error(error);
+      Alert.alert('Error', 'Failed to sign up');
+    } finally {
+      setIsSubmitted(false);
+    }
   }
 
   return (
@@ -69,7 +92,7 @@ const signup = () => {
             icon='lock'
           />
           <ButtonComponent
-            title="Sign In"
+            title="Sign Up"
             handlePress={submitForm}
             containerStyle="w-full mt-7"
             isLoading={isSubmitted}
