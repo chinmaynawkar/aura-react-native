@@ -2,6 +2,13 @@ import { ID } from 'react-native-appwrite';
 import { account, avatars, databases } from './appwriteClient';
 import { config } from './config';
 
+/**
+ * Create a new user account
+ * @param email - The user's email
+ * @param password - The user's password
+ * @param username - The user's username
+ * @returns A user object containing the user's account ID, email, username, and avatar URL
+ */
 export const createUser = async (
   email: string,
   password: string,
@@ -23,6 +30,10 @@ export const createUser = async (
 
     await signIn(email, password);
 
+    /*
+     * Create a new user document in the database
+     * The user document contains the user's account ID, email, username, and avatar URL
+     */
     const newUser = await databases.createDocument(
       config.databaseId,
       config.userCollectionId,
@@ -41,6 +52,12 @@ export const createUser = async (
   }
 };
 
+/**
+ * Sign in a user with their email and password
+ * @param email - The user's email
+ * @param password - The user's password
+ * @returns A session object containing the user's account ID, email, username, and avatar URL
+ */
 export const signIn = async (email: string, password: string) => {
   try {
     const session = await account.createEmailPasswordSession(email, password);
@@ -55,6 +72,10 @@ export const signIn = async (email: string, password: string) => {
   }
 };
 
+/**
+ * Sign out a user
+ * @returns A session object containing the user's account ID, email, username, and avatar URL
+ */
 export const signOut = async () => {
   try {
     const session = await account.deleteSession('current');
@@ -65,10 +86,30 @@ export const signOut = async () => {
   }
 };
 
+/**
+ * Get the current user's account information
+ * @returns The current user's account information
+ */
 export const getAccount = async () => {
   try {
     const currentAccount = await account.get();
     return currentAccount;
+  } catch (error: any) {
+    throw new Error(error);
+  }
+};
+
+/**
+ * Get all posts from the database
+ * @returns An array of post objects
+ */
+export const getAllPosts = async () => {
+  try {
+    const posts = await databases.listDocuments(
+      config.databaseId,
+      config.videoCollectionId
+    );
+    return posts.documents;
   } catch (error: any) {
     throw new Error(error);
   }
