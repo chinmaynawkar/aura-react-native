@@ -10,11 +10,13 @@ import EmptyState from '@/components/EmptyState';
 import { getAllPosts, getAllVideos } from '@/lib';
 import useAppwrite from '@/hooks/useAppwrite';
 import VideoCard from '@/components/VideoCard';
+import { useGlobalContext } from '@/context/GlobalProvider';
 
 const Home: React.FC = () => {
   const [isLoading, setIsLoading] = useState(false);
   const { data: posts, refetch } = useAppwrite(getAllPosts);
   const { data: latestPosts, refetch: refetchLatestVideos } = useAppwrite(getAllVideos);
+  const { user } = useGlobalContext();
 
   // console.log(JSON.stringify(posts, null, 2));
 
@@ -49,7 +51,7 @@ const Home: React.FC = () => {
                   Welcome Back
                 </Text>
                 <Text className="text-2xl font-psemibold text-white">
-                  BloodFallen
+                  {user?.username}
                 </Text>
               </View>
 
