@@ -1,4 +1,4 @@
-import { ID } from 'react-native-appwrite';
+import { ID, Query } from 'react-native-appwrite';
 import { account, avatars, databases } from './appwriteClient';
 import { config } from './config';
 
@@ -130,3 +130,21 @@ export const getAllVideos = async () => {
     throw new Error(error);
   }
 };
+
+/**
+ * Search videos by title
+ * @param query - The search query
+ * @returns An array of video objects
+ */
+export const searchVideos = async (query: string) => {
+  try {
+    const videos = await databases.listDocuments(
+      config.databaseId,
+      config.videoCollectionId,
+      [Query.search('title', query)]
+    );
+    return videos.documents;
+  } catch (error: any) {
+    throw new Error(error);
+  }
+}

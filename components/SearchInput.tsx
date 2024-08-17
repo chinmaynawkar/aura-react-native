@@ -8,12 +8,13 @@ interface SearchInputProps {
 }
 
 export default function SearchInput({ intialQuery = "" }: SearchInputProps) {
-  const pathname = usePathname();
+  const pathname = usePathname(); // use pathname to check if the search input is in focus
   const [query, setQuery] = useState<string>(intialQuery);
 
   return (
     <View className="flex flex-row items-center space-x-4 
-    w-full h-16 px-4 bg-black-100 rounded-2xl border-2 border-black-200 focus:border-secondary">
+    w-full h-16 px-4 bg-black-100 rounded-2xl 
+    border-2 border-black-200 focus:border-secondary">
       <TextInput
         className="text-base mt-0.5 text-white flex-1 font-pregular"
         value={query}
@@ -27,7 +28,7 @@ export default function SearchInput({ intialQuery = "" }: SearchInputProps) {
          if(query === '') {
           Alert.alert(
             'Missing Query',
-            'Please enter a search query'
+            'Please input a search query'
           );
           return
          }

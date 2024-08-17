@@ -8,8 +8,6 @@ import { View, Image } from 'react-native';
 import ButtonComponent from '@/components/CustomButton';
 import { useGlobalContext } from '@/context/GlobalProvider';
 
-const STYLES = ['default', 'dark-content', 'light-content'] as const;
-
 export default function App() {
   const { loading, isLogged } = useGlobalContext();
 
