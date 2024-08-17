@@ -17,7 +17,7 @@ export default function SearchInput({ intialQuery = "" }: SearchInputProps) {
       <TextInput
         className="text-base mt-0.5 text-white flex-1 font-pregular"
         value={query}
-        placeholder="Search for videos"
+        placeholder="Search for video topics"
         placeholderTextColor={'#CDCDE0'}
         onChangeText={(text) => setQuery(text)}
         autoFocus={pathname === "/search/[query]"}

@@ -114,3 +114,19 @@ export const getAllPosts = async () => {
     throw new Error(error);
   }
 };
+
+/**
+ * Get all videos from the database
+ * @returns An array of video objects
+ */
+export const getAllVideos = async () => {
+  try {
+    const videos = await databases.listDocuments(
+      config.databaseId,
+      config.videoCollectionId
+    );
+    return videos.documents;
+  } catch (error: any) {
+    throw new Error(error);
+  }
+};

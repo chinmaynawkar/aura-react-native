@@ -7,15 +7,16 @@ import { Image } from 'react-native';
 import SearchInput from '@/components/SearchInput';
 import Trending from '@/components/Trending';
 import EmptyState from '@/components/EmptyState';
-import { getAllPosts } from '@/lib';
+import { getAllPosts, getAllVideos } from '@/lib';
 import useAppwrite from '@/hooks/useAppwrite';
 import VideoCard from '@/components/VideoCard';
 
 const Home: React.FC = () => {
   const [isLoading, setIsLoading] = useState(false);
   const { data: posts, refetch } = useAppwrite(getAllPosts);
+  const { data: latestPosts, refetch: refetchLatestVideos } = useAppwrite(getAllVideos);
 
-  console.log(JSON.stringify(posts, null, 2));
+  // console.log(JSON.stringify(posts, null, 2));
 
   // this state is used to control the refreshing of the list
   const [refreshing, setRefreshing] = useState(false);
@@ -67,9 +68,7 @@ const Home: React.FC = () => {
               <Text className="text-lg font-pregular text-gray-100">
                 Latest Videos
               </Text>
-              <Text className="text-lg font-pregular text-gray-100"> 124 </Text>
-
-              {/* <Trending posts={latestPosts ?? []} /> */}
+               <Trending posts={latestPosts ?? []} /> 
             </View>
           </View>
         )}
