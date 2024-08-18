@@ -40,23 +40,10 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
-        name="bookmark"
-        options={{
-          title: 'Bookmark',
-          tabBarIcon: ({ color, focused }) => (
-            <TabBarIcon 
-              icon={icons.bookmark}
-              color={color}
-              name='Bookmark'
-              focused={focused}
-            />
-          ),
-        }}
-      />
-      <Tabs.Screen
          name='create'
          options={{
            title: 'Create',
+           headerShown: false,
            tabBarIcon: ({ color, focused }) => (
              <TabBarIcon 
                icon={icons.plus}
@@ -82,6 +69,21 @@ export default function TabLayout() {
            ),
          }}
        />
+       <Tabs.Screen
+        name="bookmark"
+        options={{
+          title: 'Bookmark',
+          headerShown: false,
+          tabBarIcon: ({ color, focused }) => (
+            <TabBarIcon 
+              icon={icons.bookmark}
+              color={color}
+              name='Favorites'
+              focused={focused}
+            />
+          ),
+        }}
+      />
       
     </Tabs>
   );
