@@ -1,6 +1,7 @@
-import { ID, Query } from 'react-native-appwrite';
-import { account, avatars, databases } from './appwriteClient';
+import { ID, ImageGravity, Query } from 'react-native-appwrite';
+import { account, avatars, databases, storage } from './appwriteClient';
 import { config } from './config';
+import { VideoPostForm } from '@/app/common/video-post-form';
 
 /**
  * Create a new user account
@@ -144,6 +145,99 @@ export const searchVideos = async (query: string) => {
       [Query.search('title', query)]
     );
     return videos.documents;
+  } catch (error: any) {
+    throw new Error(error);
+  }
+}
+
+/**
+ * Get a file preview
+ * @param fileId - The file ID
+ * @param type - The file type (image or video)
+ * @returns The URL of the file preview
+ */
+export async function getFilePreview(fileId: string, type: string) {
+  let fileUrl;
+
+  try {
+    if (type === "video") {
+      fileUrl = storage.getFileView(config.storageId, fileId);
+    } else if (type === "image") {
+      fileUrl = storage.getFilePreview(
+        config.storageId,
+        fileId,
+        2000,
+        2000,
+        ImageGravity.Top,
+        100
+      );
+    } else {
+      throw new Error("Invalid file type");
+    }
+
+    if (!fileUrl) throw Error;
+
+    return fileUrl;
+  } catch (error: any) {
+    throw new Error(error);
+  }
+}
+
+/**
+ * Upload a file to Appwrite
+ * @param file - The file to upload
+ * @param type - The type of file (image or video)
+ * @returns The URL of the uploaded file
+ */
+const uploadFile = async (file: any, type: string) => {
+  if(!file) return null;
+
+  const { mimeType, ...rest } = file;
+  const asset = { type: mimeType, ...rest };
+
+  try {
+    const uploadedFile = await storage.createFile(
+      config.storageId,
+      ID.unique(),
+      asset
+    );
+    const fileUrl = await storage.getFilePreview(uploadedFile.$id, type);
+    return fileUrl;
+
+  } catch (error: any) {
+    throw new Error(error);
+  }
+   
+}
+
+/**
+ * Create a new video post
+ * @param title - The title of the video
+ * @param video - The video file
+ * @param thumbnail - The thumbnail file
+ * @param prompt - The AI prompt
+ * @param userId - The user's account ID
+ * @returns The created video post
+ */
+export const createVideoPost = async(form : any) => {
+  try {
+    const [thumbnailUrl , videoUrl] = await Promise.all([
+      uploadFile(form.thumbnail, 'image'),
+      uploadFile(form.video, 'video'),
+    ]);
+    
+    const newPost = await databases.createDocument(
+      config.databaseId,
+      config.videoCollectionId,
+      ID.unique(),
+      {
+        title: form.title,
+        thumbnail: thumbnailUrl,
+        video: videoUrl,
+        prompt: form.prompt,
+      }
+    );
+    return newPost;
   } catch (error: any) {
     throw new Error(error);
   }

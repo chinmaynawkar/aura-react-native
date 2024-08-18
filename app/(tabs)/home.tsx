@@ -16,11 +16,9 @@ const Home: React.FC = () => {
   const [isLoading, setIsLoading] = useState(false);
   const { data: posts, refetch } = useAppwrite(getAllPosts);
   const { data: latestPosts, refetch: refetchLatestVideos } = useAppwrite(getAllVideos);
-  const { user } = useGlobalContext();
+  const { user, setUser } = useGlobalContext();
+  console.log(JSON.stringify(user, null, 2));
 
-  // console.log(JSON.stringify(posts, null, 2));
-
-  // this state is used to control the refreshing of the list
   const [refreshing, setRefreshing] = useState(false);
 
   const onRefresh = async () => {
@@ -39,8 +37,8 @@ const Home: React.FC = () => {
             title={item.title}
             thumbnail={item.thumbnail}
             video={item.video}
-            creator={item.creator.username}
-            avatar={item.creator.avatar}
+            creator={item.creator?.username}
+            avatar={item.creator?.avatar}
           />
         )}
         ListHeaderComponent={() => (
@@ -51,7 +49,7 @@ const Home: React.FC = () => {
                   Welcome Back
                 </Text>
                 <Text className="text-2xl font-psemibold text-white">
-                  {user?.username}
+                  {user?.username || 'Guest'}
                 </Text>
               </View>
 
@@ -70,7 +68,7 @@ const Home: React.FC = () => {
               <Text className="text-lg font-pregular text-gray-100">
                 Latest Videos
               </Text>
-               <Trending posts={latestPosts ?? []} /> 
+              <Trending posts={latestPosts ?? []} />
             </View>
           </View>
         )}
