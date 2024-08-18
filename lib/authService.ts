@@ -26,7 +26,7 @@ export const createUser = async (
       throw new Error("Account creation failed");
     }
 
-    const avatarUrl = avatars.getInitials(newAccount.name);
+    const avatarUrl = avatars.getInitials(username);
 
     await signIn(email, password);
 
@@ -123,7 +123,8 @@ export const getAllVideos = async () => {
   try {
     const videos = await databases.listDocuments(
       config.databaseId,
-      config.videoCollectionId
+      config.videoCollectionId,
+      [Query.orderDesc("$createdAt")]
     );
     return videos.documents;
   } catch (error: any) {

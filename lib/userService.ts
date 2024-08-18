@@ -36,9 +36,24 @@ export const getUserVideos = async (userId: string) => {
     const videos = await databases.listDocuments(
       config.databaseId,
       config.videoCollectionId,
-      [Query.equal('creator', userId)]
+      [Query.equal('creator', userId), Query.orderDesc("$createdAt")]
     );
     return videos.documents;
+  } catch (error: any) {
+    throw new Error(error);
+  }
+}
+
+// Get latest created video posts
+export async function getLatestPosts() {
+  try {
+    const posts = await databases.listDocuments(
+      config.databaseId,
+      config.videoCollectionId,
+      [Query.orderDesc("$createdAt"), Query.limit(7)]
+    );
+
+    return posts.documents;
   } catch (error: any) {
     throw new Error(error);
   }

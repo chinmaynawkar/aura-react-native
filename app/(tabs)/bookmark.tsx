@@ -45,8 +45,8 @@ const Bookmark: React.FC = () => {
         )}
         ListEmptyComponent={() => (
           <EmptyState
-            title="No Images Found"
-            subtitle="No images saved yet"
+            title="No Videos Found"
+            subtitle="No videos saved yet"
           />
         )}
         refreshControl={

@@ -3,6 +3,8 @@ import { View, Text, TouchableOpacity, Image } from "react-native";
 
 import { icons } from "../constants";
 import { AVPlaybackStatus, ResizeMode, Video } from "expo-av";
+import { likeVideoPost, unlikeVideoPost } from "@/lib";
+import { router } from "expo-router";
 
 type VideoCardProps = {
   title: string;
@@ -10,16 +12,35 @@ type VideoCardProps = {
   avatar: string;
   thumbnail: string;
   video: string;
+  videoId: string; // Add videoId prop
+  userId: string; // Add userId prop
 };
 
- export default function VideoCard({ 
+export default function VideoCard({ 
   title, 
   creator, 
   avatar, 
   thumbnail, 
-  video 
+  video,
+  videoId,
+  userId
 }: VideoCardProps) {
   const [play, setPlay] = useState<boolean>(false);
+  const [liked, setLiked] = useState<boolean>(false); // State for like status
+  const handleLike = async () => {
+    try {
+      if (liked) {
+        await unlikeVideoPost(videoId, userId);
+        setLiked(false);
+      } else {
+        await likeVideoPost(videoId, userId);
+        setLiked(true);
+        router.push('/bookmark');
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   return (
     <View className="flex flex-col items-center px-4 mb-14">
@@ -50,27 +71,28 @@ type VideoCardProps = {
           </View>
         </View>
 
-        <View className="pt-2">
+        <TouchableOpacity onPress={handleLike} className="pt-2 mr-2">
           <Image 
-          source={icons.menu} 
-          className="w-5 h-5" 
-          resizeMode="contain" />
-        </View>
+            source={liked ? icons.heartFilled : icons.heartOutlined} 
+            className="w-5 h-5" 
+            resizeMode="contain" 
+          />
+        </TouchableOpacity>
       </View>
 
       {play ? (
         <Video
-        source={{ uri: video }}
-        className="w-full h-60 rounded-xl mt-3"
-        resizeMode={ResizeMode.CONTAIN}
-        useNativeControls
-        shouldPlay
-        onPlaybackStatusUpdate={(status: AVPlaybackStatus) => {
-          if (status.isLoaded && status.didJustFinish) {
-            setPlay(false);
-          }
-        }}
-      />
+          source={{ uri: video }}
+          className="w-full h-60 rounded-xl mt-3"
+          resizeMode={ResizeMode.CONTAIN}
+          useNativeControls
+          shouldPlay
+          onPlaybackStatusUpdate={(status: AVPlaybackStatus) => {
+            if (status.isLoaded && status.didJustFinish) {
+              setPlay(false);
+            }
+          }}
+        />
       ) : (
         <TouchableOpacity
           activeOpacity={0.7}
