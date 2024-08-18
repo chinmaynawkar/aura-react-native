@@ -56,6 +56,7 @@ export default function TabLayout() {
       <Tabs.Screen
          name='create'
          options={{
+          headerShown: false,
            title: 'Create',
            tabBarIcon: ({ color, focused }) => (
              <TabBarIcon 
