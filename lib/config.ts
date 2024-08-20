@@ -6,4 +6,5 @@ export const config = {
   databaseId: "66b8c417002426b401cf",
   userCollectionId: "66b8c43d0036734ec4e2",
   videoCollectionId: "66b8c467001cadf969fa",
+  likesCollectionId: "66c1ba8e0029ecf89bac",
 };

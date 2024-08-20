@@ -5,9 +5,10 @@ import icons from "@/constants/icons";
 
 interface SearchInputProps {
   intialQuery?: string;
+  placeholder?: string;
 }
 
-export default function SearchInput({ intialQuery = "" }: SearchInputProps) {
+export default function SearchInput({ intialQuery = "" , placeholder }: SearchInputProps) {
   const pathname = usePathname(); // use pathname to check if the search input is in focus
   const [query, setQuery] = useState<string>(intialQuery);
 
@@ -18,7 +19,7 @@ export default function SearchInput({ intialQuery = "" }: SearchInputProps) {
       <TextInput
         className="text-base mt-0.5 text-white flex-1 font-pregular"
         value={query}
-        placeholder="Search for video topics"
+        placeholder={placeholder}
         placeholderTextColor={'#CDCDE0'}
         onChangeText={(text) => setQuery(text)}
         autoFocus={pathname === "/search/[query]"}

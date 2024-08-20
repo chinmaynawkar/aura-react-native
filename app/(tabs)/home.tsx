@@ -39,8 +39,10 @@ const Home: React.FC = () => {
             title={item.title}
             thumbnail={item.thumbnail}
             video={item.video}
-            creator={item.creator.username}
-            avatar={item.creator.avatar}
+            creator={item.creator?.username}
+            avatar={item.creator?.avatar}
+            videoId={item.$id}
+            userId={user?.$id}
           />
         )}
         ListHeaderComponent={() => (
@@ -51,7 +53,7 @@ const Home: React.FC = () => {
                   Welcome Back
                 </Text>
                 <Text className="text-2xl font-psemibold text-white">
-                  {user?.username}
+                  {user?.username || 'Guest'}
                 </Text>
               </View>
 
@@ -64,7 +66,7 @@ const Home: React.FC = () => {
               </View>
             </View>
 
-            <SearchInput />
+            <SearchInput placeholder="Search for video topics" />
 
             <View className="w-full flex-1 pt-5 pb-8">
               <Text className="text-lg font-pregular text-gray-100">
