@@ -4,3 +4,4 @@ export * from './appwriteClient';
 export * from './authService';
 export * from './userService'; 
 export * from './mediaService';
+export * from './bookmarkService';
